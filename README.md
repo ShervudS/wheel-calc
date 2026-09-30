@@ -62,7 +62,7 @@ Good to know:
 
 - on the free plan, Pages works only for public repositories;
 - on a project site `robots.txt` sits in a subfolder where search engines don't read it, so add `sitemap.xml` to Google Search Console and Yandex Webmaster manually; a custom domain doesn't have this problem;
-- Linux baselines for the e2e screenshots are created by the first CI run (the `playwright` artifact); commit them to `e2e/calculator.spec.ts-snapshots/` so the screenshot tests actually compare something before deploying.
+- e2e screenshot tests compare against committed baselines (`e2e/calculator.spec.ts-snapshots/*-linux.png` in CI, `*-darwin.png` locally on macOS); a missing baseline fails the test. To (re)record the Linux baselines, run Actions → “CI and deploy” → Run workflow with **Re-record e2e screenshot baselines** checked: e2e passes, uploads the new PNGs as the `snapshots` artifact and nothing is deployed; commit those files. The e2e job is pinned to `ubuntu-24.04` because font rendering differs between OS images.
 
 ## Project structure
 
