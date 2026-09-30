@@ -1,0 +1,39 @@
+{
+  "name": "wheel-calc",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Wheel fitment calculator: diameter, width, ET offset, X-factor, backspacing, tire and stretch.",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "prepare": "simple-git-hooks",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint --deny-warnings && oxfmt --check",
+    "format": "oxfmt",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run build"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run check"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^22.19.0",
+    "@vitest/coverage-v8": "^4.1.11",
+    "happy-dom": "^20.14.5",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0",
+    "simple-git-hooks": "^2.14.0",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.1",
+    "vitest": "^4.1.11"
+  }
+}

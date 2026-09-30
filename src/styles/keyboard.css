@@ -1,0 +1,30 @@
+.kb-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 8px 4px;
+}
+.kb-controls__label {
+  font-size: var(--text-sm);
+  color: var(--mute);
+}
+.kb-controls__btn {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font: 500 var(--text-sm) var(--font-sans);
+  cursor: pointer;
+}
+/* More prominent than usual: these buttons drive the diagram with arrow keys. */
+.kb-controls__btn:focus-visible {
+  outline: 3px solid var(--acct);
+}
+.kb-status {
+  font-size: var(--text-sm);
+  color: var(--mute);
+  padding: 4px 8px 8px;
+  min-height: 1.6em;
+}

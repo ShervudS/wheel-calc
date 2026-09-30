@@ -1,0 +1,74 @@
+name: CI and deploy
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: ${{ vars.SITE_URL || 'https://example.com' }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: check
+    env:
+      SITE_URL: https://example.com
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e -- --update-snapshots=missing
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: playwright
+          path: |
+            playwright-report
+            e2e/**/*-snapshots
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    needs: [check, e2e]
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Check SITE_URL
+        if: vars.SITE_URL == ''
+        run: |
+          echo "::error::Repository variable SITE_URL is not set (Settings → Secrets and variables → Actions → Variables). Without it canonical, hreflang and sitemap would point to example.com."
+          exit 1
+      - id: deployment
+        uses: actions/deploy-pages@v5

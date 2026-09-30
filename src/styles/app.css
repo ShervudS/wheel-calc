@@ -1,0 +1,40 @@
+/* Calculator: form and diagram in two columns, one column on phones. */
+.calc {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: var(--gutter);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--gutter);
+}
+@media (max-width: 820px) {
+  .calc {
+    grid-template-columns: 1fr;
+  }
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  min-width: 0;
+}
+.panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.panel__title {
+  font: 600 20px/1.2 var(--font-sans);
+  margin: 0;
+}
+/* Hint below the calculator, spanning the full grid width. */
+.calc-hint {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--mute);
+  font-size: 14px;
+  line-height: 1.6;
+}

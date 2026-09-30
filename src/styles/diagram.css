@@ -1,0 +1,23 @@
+.diagram-panel {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+/* The diagram only: icons are SVG too and must not get these rules. */
+.diagram {
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  display: block;
+}
+.diagram text {
+  font-family: var(--font-mono);
+  fill: var(--ink);
+}
+.hit-area {
+  cursor: grab;
+}
+.hit-area:active {
+  cursor: grabbing;
+}

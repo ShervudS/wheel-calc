@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "singleQuote": true,
+  "printWidth": 100,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "legacy/",
+    "dist/",
+    "coverage/",
+    "node_modules/",
+    "package-lock.json",
+    "playwright-report/",
+    "test-results/",
+    "e2e/**/*-snapshots/",
+    "src/page/template.html",
+    "**/__snapshots__/"
+  ]
+}

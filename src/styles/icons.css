@@ -1,0 +1,8 @@
+/* Sprite icons: size follows the text, color is currentColor. */
+.icon {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.2em;
+  flex: none;
+}

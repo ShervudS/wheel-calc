@@ -1,0 +1,157 @@
+.history {
+  display: flex;
+  gap: 6px;
+  margin: -6px 0 16px;
+}
+.history__btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 6px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+}
+.history__btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.unit-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+.unit-switch__btn {
+  border: 0;
+  background: transparent;
+  color: var(--mute);
+  padding: 9px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.unit-switch__btn[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--panel);
+}
+
+.field {
+  display: block;
+  margin-bottom: 14px;
+}
+.field__label {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-sm);
+  color: var(--mute);
+  margin-bottom: 5px;
+}
+.field__unit {
+  font-style: normal;
+}
+.field__input {
+  width: 100%;
+  padding: 10px 12px;
+  font: 500 17px var(--font-mono);
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+.field__select {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+.field__input:focus-visible,
+.unit-switch__btn:focus-visible,
+.history__btn:focus-visible,
+.field__select:focus-visible {
+  outline-offset: 1px;
+}
+
+.x-hint {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--mute);
+  margin: -8px 0 14px;
+}
+.x-hint--limited {
+  color: var(--warn);
+  font-weight: 500;
+}
+.divider {
+  border: 0;
+  border-top: 1px dashed var(--line);
+  margin: 18px 0;
+}
+
+.checkbox {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+.checkbox__input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--acc);
+}
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.tire-summary {
+  font-size: var(--text-sm);
+  color: var(--mute);
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+
+/* Tire fit warning: yellow (warn) or red (bad). */
+.tire-warning {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--line);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.tire-warning__title {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+.tire-warning[data-level='warn'] {
+  border-color: var(--warn);
+}
+.tire-warning[data-level='warn'] .tire-warning__title {
+  color: var(--warn);
+}
+.tire-warning[data-level='bad'] {
+  border-color: var(--bad);
+}
+.tire-warning[data-level='bad'] .tire-warning__title {
+  color: var(--bad);
+}

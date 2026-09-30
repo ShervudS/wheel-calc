@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="{{@lang}}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{{meta.title}}</title>
+    <meta name="description" content="{{meta.description}}" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <!--seo-->
+    <meta name="theme-color" content="#e9ece6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+    <script>
+      try {
+        var wcTheme = localStorage.getItem('wc-theme');
+        if (wcTheme === 'dark' || wcTheme === 'light')
+          document.documentElement.setAttribute('data-theme', wcTheme);
+      } catch (e) {}
+    </script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts don't block rendering: a metric-matched fallback is used until they load. -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" /></noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <header class="container">
+      <div class="topbar">
+        <div class="brand"><i class="brand__logo" aria-hidden="true"></i>{{brand}}</div>
+        <div class="topbar__actions">
+          <a class="pill-btn" id="lang" href="{{@altHref}}" hreflang="{{@altLang}}" lang="{{@altLang}}">{{@altName}}</a>
+          <button class="pill-btn" id="tt" type="button">{{@icon:moon}}{{@icon:sun}}<span id="ttl">{{theme.toDark}}</span></button>
+        </div>
+      </div>
+      <section class="hero">
+        <h1 class="hero__title">{{{hero.title_html}}}</h1>
+        <p class="hero__lead">{{hero.lead}}</p>
+        <ul class="badges">
+          <li class="badge">{{hero.badge1}}</li>
+          <li class="badge">{{hero.badge2}}</li>
+          <li class="badge">{{hero.badge3}}</li>
+          <li class="badge">{{hero.badge4}}</li>
+        </ul>
+        <a class="cta" href="#calc">{{hero.cta}}{{@icon:arrow-down}}</a>
+      </section>
+    </header>
+    <main>
+      <div class="calc" id="calc">
+        <div class="panel">
+          <div class="panel__header">
+            <h2 class="panel__title">{{form.title}}</h2>
+            <button id="share" class="icon-btn" type="button" aria-label="{{share.label}}" title="{{share.label}}">{{@icon:share}}{{@icon:check}}</button>
+          </div>
+          <span id="shareStatus" class="sr-only" aria-live="polite"></span>
+          <div class="history">
+            <button class="history__btn" id="ub" type="button" title="{{history.undoTitle}}" disabled>{{@icon:undo}}{{history.undo}}</button>
+            <button class="history__btn" id="rb" type="button" title="{{history.redoTitle}}" disabled>{{@icon:redo}}{{history.redo}}</button>
+            <button class="history__btn" id="xb" type="button" title="{{history.resetTitle}}" disabled>{{history.reset}}</button>
+          </div>
+          <div class="unit-switch" role="group" aria-label="{{units.group}}">
+            <button class="unit-switch__btn" id="u-mm" type="button" aria-pressed="true">{{units.metric}}</button>
+            <button class="unit-switch__btn" id="u-in" type="button" aria-pressed="false">{{units.inches}}</button>
+          </div>
+          <label class="field"><span class="field__label">{{presets.label}}</span><select id="pr" class="field__select"><option value="">{{presets.placeholder}}</option></select></label>
+          <label class="field"><span class="field__label">{{field.diameter}} <em class="field__unit" data-length-unit>{{unit.mm}}</em></span><input class="field__input" id="D" type="number" inputmode="decimal" /></label>
+          <label class="field"><span class="field__label">{{field.width}} <em class="field__unit" data-length-unit>{{unit.mm}}</em></span><input class="field__input" id="W" type="number" inputmode="decimal" /></label>
+          <label class="field"><span class="field__label">{{field.offset}} <em class="field__unit">{{unit.mm}}</em></span><input class="field__input" id="ET" type="number" inputmode="decimal" step="1" /></label>
+          <hr class="divider" />
+          <label class="field"><span class="field__label">{{field.xFactor}} <em class="field__unit">{{unit.mm}}</em></span><input class="field__input" id="X" type="number" inputmode="decimal" step="1" aria-describedby="xh" /></label>
+          <div class="x-hint" id="xh" aria-live="polite"></div>
+          <label class="field"><span class="field__label">{{field.backspacing}} <em class="field__unit" data-length-unit>{{unit.mm}}</em></span><input class="field__input" id="B" type="number" inputmode="decimal" /></label>
+          <label class="checkbox"><input class="checkbox__input" type="checkbox" id="tOn" /> {{tire.show}}</label>
+          <div id="tf" hidden>
+            <div class="field-row">
+              <label class="field"><span class="field__label">{{tire.width}}</span><input class="field__input" id="TW" type="number" inputmode="numeric" value="245" /></label>
+              <label class="field"><span class="field__label">{{tire.aspect}}</span><input class="field__input" id="TA" type="number" inputmode="numeric" value="40" /></label>
+            </div>
+            <p class="tire-summary" id="tr"></p>
+            <div class="tire-warning" id="tWarn" aria-live="polite" hidden><b class="tire-warning__title" id="tWarnT"></b><span class="tire-warning__text" id="tWarnB"></span></div>
+          </div>
+        </div>
+        <div class="panel diagram-panel">
+          <svg class="diagram" id="s" viewBox="0 0 640 620" role="img" aria-label="{{svg.aria}}">
+            <g data-layer="base"></g>
+            <g data-layer="hits"></g>
+            <g data-layer="overlay" pointer-events="none"></g>
+          </svg>
+          <div class="kb-controls" role="group" aria-label="{{kb.group}}"><span class="kb-controls__label">{{kb.label}}</span><button class="kb-controls__btn" type="button" data-k="D">{{kb.D}}</button><button class="kb-controls__btn" type="button" data-k="W">{{kb.W}}</button><button class="kb-controls__btn" type="button" data-k="ET">{{kb.ET}}</button><button class="kb-controls__btn" type="button" data-k="X">{{kb.X}}</button></div>
+          <div class="kb-status" id="kbs" aria-live="polite">{{kb.intro}}</div>
+        </div>
+        <p class="panel calc-hint">{{form.hint}}</p>
+      </div>
+
+      <section class="container section" id="how">
+        <h2 class="section__title">{{how.title}}</h2>
+        <p class="section__lead">{{how.sub}}</p>
+        <div class="cards">
+          <div class="card"><span class="card__num">01</span><h3 class="card__title">{{how.1.title}}</h3><p class="card__text">{{how.1.text}}</p></div>
+          <div class="card"><span class="card__num">02</span><h3 class="card__title">{{how.2.title}}</h3><p class="card__text">{{how.2.text}}</p></div>
+          <div class="card"><span class="card__num">03</span><h3 class="card__title">{{how.3.title}}</h3><p class="card__text">{{how.3.text}}</p></div>
+          <div class="card"><span class="card__num">04</span><h3 class="card__title">{{how.4.title}}</h3><p class="card__text">{{how.4.text}}</p></div>
+        </div>
+      </section>
+
+      <section class="container section" id="terms">
+        <h2 class="section__title">{{terms.title}}</h2>
+        <p class="section__lead">{{terms.sub}}</p>
+        <div class="cards">
+          <div class="card"><h3 class="card__title">{{terms.1.title}}</h3><p class="card__text">{{terms.1.text}}</p></div>
+          <div class="card"><h3 class="card__title">{{terms.2.title}}</h3><p class="card__text">{{terms.2.text}}</p></div>
+          <div class="card"><h3 class="card__title">{{terms.3.title}}</h3><p class="card__text">{{terms.3.text}}</p></div>
+          <div class="card"><h3 class="card__title">{{terms.4.title}}</h3><p class="card__text">{{terms.4.text}}</p></div>
+          <div class="card"><h3 class="card__title">{{terms.5.title}}</h3><p class="card__text">{{terms.5.text}}</p></div>
+          <div class="card"><h3 class="card__title">{{terms.6.title}}</h3><p class="card__text">{{terms.6.text}}</p></div>
+        </div>
+      </section>
+
+      <section class="container section" id="why">
+        <h2 class="section__title">{{why.title}}</h2>
+        <p class="section__lead">{{why.sub}}</p>
+        <div class="cards">
+          <div class="card"><h3 class="card__title">{{why.1.title}}</h3><p class="card__text">{{why.1.text}}</p></div>
+          <div class="card"><h3 class="card__title">{{why.2.title}}</h3><p class="card__text">{{why.2.text}}</p></div>
+          <div class="card"><h3 class="card__title">{{why.3.title}}</h3><p class="card__text">{{why.3.text}}</p></div>
+          <div class="card"><h3 class="card__title">{{why.4.title}}</h3><p class="card__text">{{why.4.text}}</p></div>
+        </div>
+        <p class="section__note">{{why.note}}</p>
+      </section>
+
+      <section class="container section" id="faq">
+        <h2 class="section__title">{{faq.title}}</h2>
+        <p class="section__lead">{{faq.sub}}</p>
+        <details class="faq-item"><summary class="faq-item__question">{{faq.1.q}}{{@icon:plus}}{{@icon:minus}}</summary><p class="faq-item__answer">{{faq.1.a}}</p></details>
+        <details class="faq-item"><summary class="faq-item__question">{{faq.2.q}}{{@icon:plus}}{{@icon:minus}}</summary><p class="faq-item__answer">{{faq.2.a}}</p></details>
+        <details class="faq-item"><summary class="faq-item__question">{{faq.3.q}}{{@icon:plus}}{{@icon:minus}}</summary><p class="faq-item__answer">{{faq.3.a}}</p></details>
+        <details class="faq-item"><summary class="faq-item__question">{{faq.4.q}}{{@icon:plus}}{{@icon:minus}}</summary><p class="faq-item__answer">{{faq.4.a}}</p></details>
+        <details class="faq-item"><summary class="faq-item__question">{{faq.5.q}}{{@icon:plus}}{{@icon:minus}}</summary><p class="faq-item__answer">{{faq.5.a}}</p></details>
+      </section>
+    </main>
+    <footer class="container site-footer">
+      <div>{{footer.text}}</div>
+    </footer>
+    <!--i18n-->
+  </body>
+</html>

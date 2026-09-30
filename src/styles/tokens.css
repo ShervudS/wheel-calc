@@ -1,0 +1,52 @@
+/*
+ * Fallback font with IBM Plex Sans metrics: while the web font loads, text takes
+ * nearly the same space, so the layout does not shift (CLS). Plex width ≈ 95.7% of Arial,
+ * ascender 1025 and descender 275 per 1000 units.
+ */
+@font-face {
+  font-family: 'Plex Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Liberation Sans');
+  size-adjust: 95.7%;
+  ascent-override: 107.1%;
+  descent-override: 28.7%;
+  line-gap-override: 0%;
+}
+
+/*
+ * Colors: light-dark(light, dark). The theme follows color-scheme:
+ * system by default, the theme button pins the choice with data-theme.
+ */
+:root {
+  color-scheme: light dark;
+
+  --bg: light-dark(#e9ece6, #121212);
+  --panel: light-dark(#f7f8f4, #1b1b1b);
+  --ink: light-dark(#1c2226, #ececec);
+  --mute: light-dark(#5a6463, #9a9a9a);
+  --line: light-dark(#c9cfc6, #333333);
+  --acc: light-dark(#e4572e, #ff7a4d);
+  --acct: light-dark(#b03a17, #ff7a4d);
+  --cta: light-dark(#b03a17, #ff7a4d);
+  --cta-ink: light-dark(#ffffff, #121212);
+  --rim2: light-dark(#aab3ad, #5c5c5c);
+  --grid: light-dark(#d9ddd5, #232323);
+  --tire: light-dark(#0f1214, #0b0b0b);
+  --tireE: light-dark(#4d565b, #8f8f8f);
+  --warn: light-dark(#8f5609, #e0a743);
+  --bad: light-dark(#c02f24, #ff6257);
+
+  --font-sans: 'IBM Plex Sans', 'Plex Fallback', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+  --text-sm: 13px;
+
+  --radius: 10px;
+  --radius-sm: 8px;
+  --content-width: 1100px;
+  --gutter: 20px;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}

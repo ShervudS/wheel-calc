@@ -1,0 +1,13 @@
+/*
+ * Styles entry point. Order matters: tokens → base → shared → page → UI.
+ * Vite bundles everything into one CSS file.
+ */
+@import './tokens.css';
+@import './base.css';
+@import './controls.css';
+@import './icons.css';
+@import './page.css';
+@import './app.css';
+@import './form.css';
+@import './keyboard.css';
+@import './diagram.css';
